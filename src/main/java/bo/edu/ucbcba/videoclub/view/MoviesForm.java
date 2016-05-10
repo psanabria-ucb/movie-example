@@ -5,7 +5,6 @@ import bo.edu.ucbcba.videoclub.model.Movie;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -31,6 +30,12 @@ public class MoviesForm extends JFrame {
         });
         movieController = new MovieController();
         populateTable();
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                populateTable();
+            }
+        });
     }
 
     private void launchRegister() {
@@ -41,7 +46,7 @@ public class MoviesForm extends JFrame {
     }
 
     private void populateTable() {
-        List<Movie> movies = movieController.getAllMovies();
+        List<Movie> movies = movieController.searchMovies(searchText.getText());
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("Title");
         model.addColumn("Description");

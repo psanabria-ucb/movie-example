@@ -46,9 +46,10 @@ public class MovieController {
         entityManager.close();
     }
 
-    public List<Movie> getAllMovies() {
+    public List<Movie> searchMovies(String q) {
         EntityManager entityManager = VideoClubEntityManager.createEntityManager();
-        TypedQuery<Movie> query = entityManager.createQuery("select m from Movie m", Movie.class);
+        TypedQuery<Movie> query = entityManager.createQuery("select m from Movie m WHERE lower(m.title) like :title", Movie.class);
+        query.setParameter("title", "%" + q.toLowerCase() + "%");
         List<Movie> response = query.getResultList();
         entityManager.close();
         return response;
