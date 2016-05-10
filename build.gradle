@@ -3,8 +3,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'application'
 
-mainClassName = 'bo.edu.ucbcba.group1.Main'
-sourceCompatibility = 1.7
+mainClassName = 'bo.edu.ucbcba.videoclub.Main'
 
 repositories {
     mavenCentral()

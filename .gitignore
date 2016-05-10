@@ -16,3 +16,7 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 .idea
+
+#Derby Database
+derby.log
+VideoClub
