@@ -1,0 +1,17 @@
+group 'bo.edu.ucbcba.videoclub'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'application'
+
+mainClassName = 'bo.edu.ucbcba.group1.Main'
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.derby:derby:10.1.1.0'
+    compile 'org.eclipse.persistence:eclipselink:2.6.3'
+    testCompile 'junit:junit:4.11'
+}
