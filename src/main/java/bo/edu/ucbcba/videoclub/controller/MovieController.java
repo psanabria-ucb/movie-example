@@ -5,6 +5,8 @@ import bo.edu.ucbcba.videoclub.exceptions.ValidationException;
 import bo.edu.ucbcba.videoclub.model.Movie;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class MovieController {
     public void create(String title,
@@ -41,5 +43,14 @@ public class MovieController {
         entityManager.getTransaction().begin();
         entityManager.persist(movie);
         entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    public List<Movie> getAllMovies() {
+        EntityManager entityManager = VideoClubEntityManager.createEntityManager();
+        TypedQuery<Movie> query = entityManager.createQuery("select m from Movie m", Movie.class);
+        List<Movie> response = query.getResultList();
+        entityManager.close();
+        return response;
     }
 }
