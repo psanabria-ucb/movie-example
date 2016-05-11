@@ -9,11 +9,14 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id; // Primary Key, and Auto Generated
+
     @Column(length = 100)
     private String title;
+
     @Lob
     @Column(length = 500)
     private String description; // Lob will create as TEXT instead of VARCHAR
+
     private int length; // In minutes
     private int releaseYear;
     private int rating;
