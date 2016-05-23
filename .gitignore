@@ -20,3 +20,6 @@ gradle-app.setting
 #Derby Database
 derby.log
 VideoClub
+
+#OSX Things
+.DS_Store

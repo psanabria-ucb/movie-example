@@ -20,6 +20,8 @@ public class Movie {
     private int length; // In minutes
     private int releaseYear;
     private int rating;
+    @ManyToOne
+    private Director director;
 
     public int getId() {
         return id;
@@ -67,5 +69,13 @@ public class Movie {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
     }
 }

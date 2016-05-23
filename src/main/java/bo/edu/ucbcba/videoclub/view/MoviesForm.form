@@ -24,14 +24,6 @@
         </constraints>
         <properties/>
       </component>
-      <component id="161f0" class="javax.swing.JButton" binding="createButton">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Add Movie"/>
-        </properties>
-      </component>
       <hspacer id="13ddc">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -47,6 +39,27 @@
           <toolTipText value="Search by name"/>
         </properties>
       </component>
+      <grid id="1c29e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="603b4" class="javax.swing.JButton" binding="createButton">
+            <constraints/>
+            <properties>
+              <text value="Add Movie"/>
+            </properties>
+          </component>
+          <component id="4ec00" class="javax.swing.JButton" binding="addDirectorButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Add Director"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

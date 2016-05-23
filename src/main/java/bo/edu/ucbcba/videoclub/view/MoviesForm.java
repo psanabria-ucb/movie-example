@@ -1,7 +1,12 @@
 package bo.edu.ucbcba.videoclub.view;
 
+import bo.edu.ucbcba.videoclub.controller.DirectorController;
 import bo.edu.ucbcba.videoclub.controller.MovieController;
+import bo.edu.ucbcba.videoclub.model.Director;
 import bo.edu.ucbcba.videoclub.model.Movie;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +21,7 @@ public class MoviesForm extends JFrame {
     private JButton searchButton;
     private JTable moviesTable;
     private JButton createButton;
+    private JButton addDirectorButton;
     private MovieController movieController;
 
     public MoviesForm() {
@@ -29,6 +35,12 @@ public class MoviesForm extends JFrame {
                 launchRegister();
             }
         });
+        addDirectorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                launchRegisterDirector();
+            }
+        });
         movieController = new MovieController();
         populateTable();
         searchButton.addActionListener(new ActionListener() {
@@ -37,6 +49,12 @@ public class MoviesForm extends JFrame {
                 populateTable();
             }
         });
+    }
+
+    private void launchRegisterDirector() {
+        RegisterDirector form = new RegisterDirector(this);
+
+        form.setVisible(true);
     }
 
     private void launchRegister() {
@@ -54,16 +72,18 @@ public class MoviesForm extends JFrame {
         model.addColumn("Rating");
         model.addColumn("Release Year");
         model.addColumn("Length");
+        model.addColumn("Director");
         moviesTable.setModel(model);
 
         for (Movie m : movies) {
-            Object[] row = new Object[5];
+            Object[] row = new Object[6];
 
             row[0] = m.getTitle();
             row[1] = m.getDescription();
             row[2] = m.getRating();
             row[3] = m.getReleaseYear();
             row[4] = String.format("%s:%s", m.getLength() / 60, m.getLength() % 60);
+            row[5] = m.getDirector();
             model.addRow(row);
         }
     }
@@ -84,20 +104,26 @@ public class MoviesForm extends JFrame {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
         searchButton = new JButton();
         searchButton.setText("Search");
-        rootPanel.add(searchButton, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(searchButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         moviesTable = new JTable();
-        rootPanel.add(moviesTable, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
-        createButton = new JButton();
-        createButton.setText("Add Movie");
-        rootPanel.add(createButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        rootPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        rootPanel.add(moviesTable, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        rootPanel.add(spacer1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         searchText = new JTextField();
         searchText.setToolTipText("Search by name");
-        rootPanel.add(searchText, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        rootPanel.add(searchText, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        rootPanel.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        createButton = new JButton();
+        createButton.setText("Add Movie");
+        panel1.add(createButton);
+        addDirectorButton = new JButton();
+        addDirectorButton.setText("Add Director");
+        panel1.add(addDirectorButton);
     }
 
     /**

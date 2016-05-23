@@ -1,7 +1,9 @@
 package bo.edu.ucbcba.videoclub.view;
 
+import bo.edu.ucbcba.videoclub.controller.DirectorController;
 import bo.edu.ucbcba.videoclub.controller.MovieController;
 import bo.edu.ucbcba.videoclub.exceptions.ValidationException;
+import bo.edu.ucbcba.videoclub.model.Director;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -10,8 +12,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 public class RegisterMovieForm extends JDialog {
+    private final DirectorController directorController;
     private JPanel rootPanel;
     private JTextField title;
     private JTextArea description;
@@ -25,6 +30,7 @@ public class RegisterMovieForm extends JDialog {
     private JRadioButton rating3;
     private JRadioButton rating4;
     private JRadioButton rating5;
+    private JComboBox directorComboBox;
     private int rating = 5;
     private MovieController controller;
 
@@ -57,16 +63,26 @@ public class RegisterMovieForm extends JDialog {
         rating4.addActionListener(ratingListener);
         rating5.addActionListener(ratingListener);
         controller = new MovieController();
+        directorController = new DirectorController();
+        populateComboBox();
+    }
+
+    private void populateComboBox() {
+        List<Director> directors = directorController.getAllDirectors();
+        for (Director d : directors) {
+            directorComboBox.addItem(d);
+        }
     }
 
     private void saveUser() {
         try {
+            Director d = (Director) directorComboBox.getSelectedItem();
             controller.create(title.getText(),
                     description.getText(),
                     releaseYear.getText(),
                     rating,
                     hoursLength.getText(),
-                    minutesLength.getText());
+                    minutesLength.getText(), d);
         } catch (ValidationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Format error", JOptionPane.ERROR_MESSAGE);
         }
@@ -96,7 +112,7 @@ public class RegisterMovieForm extends JDialog {
      */
     private void $$$setupUI$$$() {
         rootPanel = new JPanel();
-        rootPanel.setLayout(new GridLayoutManager(8, 10, new Insets(20, 20, 20, 20), -1, -1));
+        rootPanel.setLayout(new GridLayoutManager(9, 10, new Insets(20, 20, 20, 20), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setText("Register Movie");
         rootPanel.add(label1, new GridConstraints(0, 0, 1, 10, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -106,7 +122,7 @@ public class RegisterMovieForm extends JDialog {
         title = new JTextField();
         rootPanel.add(title, new GridConstraints(1, 1, 1, 9, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final Spacer spacer1 = new Spacer();
-        rootPanel.add(spacer1, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        rootPanel.add(spacer1, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("Description");
         rootPanel.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -157,10 +173,15 @@ public class RegisterMovieForm extends JDialog {
         rootPanel.add(spacer2, new GridConstraints(3, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         cancelButton = new JButton();
         cancelButton.setText("Cancel");
-        rootPanel.add(cancelButton, new GridConstraints(6, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(cancelButton, new GridConstraints(7, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         saveButton = new JButton();
         saveButton.setText("Save");
-        rootPanel.add(saveButton, new GridConstraints(6, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rootPanel.add(saveButton, new GridConstraints(7, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label9 = new JLabel();
+        label9.setText("Director");
+        rootPanel.add(label9, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        directorComboBox = new JComboBox();
+        rootPanel.add(directorComboBox, new GridConstraints(6, 1, 1, 6, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(rating5);

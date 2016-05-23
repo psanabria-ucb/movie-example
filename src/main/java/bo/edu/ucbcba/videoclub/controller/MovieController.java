@@ -2,6 +2,7 @@ package bo.edu.ucbcba.videoclub.controller;
 
 import bo.edu.ucbcba.videoclub.dao.VideoClubEntityManager;
 import bo.edu.ucbcba.videoclub.exceptions.ValidationException;
+import bo.edu.ucbcba.videoclub.model.Director;
 import bo.edu.ucbcba.videoclub.model.Movie;
 
 import javax.persistence.EntityManager;
@@ -14,7 +15,7 @@ public class MovieController {
                        String releaseYear,
                        int rating,
                        String hoursLength,
-                       String minutesLength) {
+                       String minutesLength, Director d) {
 
         Movie movie = new Movie();
         movie.setTitle(title);
@@ -38,6 +39,8 @@ public class MovieController {
         if (minutes >= 60)
             throw new ValidationException("Minutes can't be greater than 59");
         movie.setLength(hours * 60 + minutes);
+
+        movie.setDirector(d);
         
         EntityManager entityManager = VideoClubEntityManager.createEntityManager();
         entityManager.getTransaction().begin();
