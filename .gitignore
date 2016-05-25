@@ -15,11 +15,12 @@ gradle-app.setting
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-.idea
+.idea/
 
 #Derby Database
 derby.log
-VideoClub
+/VideoClub/
 
 #OSX Things
 .DS_Store
+out/
