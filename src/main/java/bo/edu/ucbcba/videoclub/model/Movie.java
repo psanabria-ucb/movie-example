@@ -1,6 +1,8 @@
 // Movie class, this class represents a movie table
 package bo.edu.ucbcba.videoclub.model;
 
+import bo.edu.ucbcba.videoclub.exceptions.ValidationException;
+
 import javax.persistence.*;
 
 // Movie Entity
@@ -36,6 +38,12 @@ public class Movie {
     }
 
     public void setTitle(String title) {
+        if (title == null)
+            throw new ValidationException("Null title");
+        if (title.isEmpty())
+            throw new ValidationException("Title can't be empty");
+        if (title.length() > 255)
+            throw new ValidationException("Title is too long");
         this.title = title;
     }
 
